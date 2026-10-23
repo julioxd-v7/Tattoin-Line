@@ -24,8 +24,8 @@ export default async function OgImage() {
             Tatuagem autoral{city ? ` · ${city}` : ''}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div style={{ fontSize: 96, lineHeight: 1 }}>{brand}</div>
-            {artistName ? <div style={{ fontSize: 36, color: '#bdb5a8', fontFamily: 'sans-serif' }}>por {artistName}</div> : null}
+            <div style={{ display: 'flex', fontSize: 96, lineHeight: 1 }}>{brand}</div>
+            {artistName ? <div style={{ display: 'flex', fontSize: 36, color: '#bdb5a8', fontFamily: 'sans-serif' }}>por {artistName}</div> : null}
           </div>
           <div style={{ display: 'flex', fontSize: 28, color: '#bdb5a8', fontFamily: 'sans-serif' }}>{line}</div>
         </div>
@@ -33,7 +33,7 @@ export default async function OgImage() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={photo} alt="" width={420} height={630} style={{ width: 420, height: 630, objectFit: 'cover' }} />
         ) : (
-          <div style={{ width: 24, height: 630, background: accent }} />
+          <div style={{ display: 'flex', width: 24, height: 630, background: accent }} />
         )}
       </div>
     ),

@@ -46,3 +46,6 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     </div>
   );
 }
+
+// páginas montadas na hora: o build não depende do banco de dados
+export const dynamic = 'force-dynamic';
