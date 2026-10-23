@@ -24,7 +24,7 @@ export default async function Configuracoes() {
             <F label="Sinal mínimo (R$)" name="deposit_min" value={money(s.deposit_min_cents)} />
           </div>
           <label className="check"><input type="checkbox" name="allow_full_payment" defaultChecked={s.allow_full_payment} /> <span>Permitir pagamento integral de projetos autorais</span></label>
-          <label className="field"><span>Faixas por tamanho <small>— uma por linha: Rótulo | valor inicial | minutos (use "-" para “Solicitar orçamento”)</small></span><textarea className="textarea" name="size_tiers" defaultValue={tiers} style={{ fontFamily: 'ui-monospace, monospace' }} /></label>
+          <label className="field"><span>Faixas por tamanho <small>— uma por linha: Rótulo | valor inicial | minutos (use “-” para “Solicitar orçamento”)</small></span><textarea className="textarea" name="size_tiers" defaultValue={tiers} style={{ fontFamily: 'ui-monospace, monospace' }} /></label>
           <div className="form-grid">
             <label className="check" style={{ alignSelf: 'end' }}><input type="checkbox" name="consult_enabled" defaultChecked={s.consult_enabled} /> <span>Oferecer consulta de avaliação</span></label>
             <F label="Valor da consulta (R$)" name="consult_price" value={money(s.consult_price_cents)} />

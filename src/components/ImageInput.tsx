@@ -6,7 +6,7 @@ const MIN_BYTES = 700 * 1024; // abaixo disso só reduz se a imagem for maior qu
 
 async function shrink(file: File): Promise<File> {
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || !('createImageBitmap' in window)) return file;
-  const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+  const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' } as unknown as ImageBitmapOptions);
   const scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
   if (scale === 1 && file.size < MIN_BYTES) { bmp.close(); return file; }
   const canvas = document.createElement('canvas');

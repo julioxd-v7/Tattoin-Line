@@ -88,8 +88,8 @@ export default function SimEditor({ photo, art, value, hideArt, onCommit }: Prop
           width={stage.w}
           height={stage.h}
           className="sim-stage"
-          onMouseDown={(e) => setSelected(e.target === artRef.current)}
-          onTouchStart={(e) => { if (e.evt.touches.length === 1) setSelected(e.target === artRef.current); }}
+          onMouseDown={(e) => setSelected((e.target as unknown) === artRef.current)}
+          onTouchStart={(e) => { if (e.evt.touches.length === 1) setSelected((e.target as unknown) === artRef.current); }}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
