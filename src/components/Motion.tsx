@@ -19,7 +19,7 @@ export function Motion() {
         if (el.getBoundingClientRect().top > vh * 0.92) { el.classList.add('rv-wait'); io!.observe(el); }
       });
     };
-    if ('IntersectionObserver' in window) {
+    if (typeof IntersectionObserver === 'function') {
       io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;

@@ -143,7 +143,7 @@ export function Simulator({ projects, initialSlug, brand }: { projects: SimProje
       const blob = await renderComposite(photo, art, live, `Simulação ilustrativa · ${brand}`);
       const file = new File([blob], 'simulacao-tatuagem.png', { type: 'image/png' });
       const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
-      if ('share' in navigator && nav.canShare?.({ files: [file] }) && window.matchMedia('(pointer: coarse)').matches) {
+      if (typeof navigator.share === 'function' && nav.canShare?.({ files: [file] }) && window.matchMedia('(pointer: coarse)').matches) {
         await navigator.share({ files: [file], title: 'Minha simulação' }).catch(() => undefined);
       } else {
         const url = URL.createObjectURL(blob);

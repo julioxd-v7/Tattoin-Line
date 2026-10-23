@@ -38,7 +38,7 @@ export function ShareButton() {
     <button type="button" className="btn btn-ghost btn-sm" onClick={async () => {
       const url = window.location.href;
       try {
-        if ('share' in navigator) { await navigator.share({ url }); return; }
+        if (typeof navigator.share === 'function') { await navigator.share({ url }); return; }
         await navigator.clipboard.writeText(url);
         setLabel('Link copiado');
       } catch { setLabel(url); }

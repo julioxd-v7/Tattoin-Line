@@ -39,7 +39,7 @@ export async function photoFromFile(file: File): Promise<Photo> {
   const err = validateFile(file.size, sniffImage(await head(file)), 'photo');
   if (err) throw new Error(err);
   let canvas: HTMLCanvasElement;
-  if ('createImageBitmap' in window) {
+  if (typeof createImageBitmap === 'function') {
     const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' } as unknown as ImageBitmapOptions);
     const dim = validateDimensions(bmp.width, bmp.height, 'photo');
     if (dim) { bmp.close(); throw new Error(dim); }
