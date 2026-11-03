@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from 'next';
-import { Instrument_Serif, Inter_Tight } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { getArtist, getSettings } from '@/lib/data';
+// ordem importa: tokens → base → componentes globais → estilos de página
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+import '@/styles/components.css';
 import './globals.css';
+import '@/styles/home.css';
 
-const display = Instrument_Serif({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
-const body = Inter_Tight({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-body', display: 'swap' });
+/** Títulos, navegação, rótulos e botões. */
+const display = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500'], variable: '--font-display', display: 'swap' });
+/** Texto corrido e formulários. */
+const body = Inter({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-body', display: 'swap' });
 
 const site = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -33,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#121110' }, { media: '(prefers-color-scheme: light)', color: '#f6f3ee' }],
+  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#0b0b0b' }, { media: '(prefers-color-scheme: light)', color: '#f4f4f2' }],
   colorScheme: 'dark light',
   viewportFit: 'cover'
 };

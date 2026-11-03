@@ -16,7 +16,7 @@ export default function Recuperar({ searchParams }: { searchParams: { erro?: str
           <label className="field"><span>E-mail</span><input className="input" name="email" type="email" autoComplete="username" required /></label>
           <Submit>Enviar link</Submit>
         </ActionForm>
-        <Link href="/admin/login" className="small">Voltar para o login</Link>
+        <Link href="/admin/login" className="small tap">Voltar para o login</Link>
       </div>
     </div>
   );

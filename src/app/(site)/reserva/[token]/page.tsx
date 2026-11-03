@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAppointmentByToken, hoursUntil } from '@/lib/booking';
 import { getArtist, getSettings } from '@/lib/data';
+import { cleanText } from '@/lib/contact';
 import { formatBRL, formatDuration } from '@/lib/money';
 import { formatDateTime } from '@/lib/tz';
 import { AppointmentTag, PaymentTag } from '@/components/StatusTag';
@@ -16,6 +17,8 @@ export default async function Reserva({ params }: { params: { token: string } })
   const a = await getAppointmentByToken(params.token);
   if (!a) notFound();
   const [artist, s] = await Promise.all([getArtist(), getSettings()]);
+  // endereço só se for real (sem o modelo "[Endereço do estúdio]" do banco de exemplo)
+  const place = [cleanText(s.address), cleanText(s.city)].filter(Boolean).join(', ');
   const tz = artist.timezone;
   const { data: ficha } = a.client_id ? await serviceClient().from('clients').select('ficha_token, ficha_completed_at').eq('id', a.client_id).maybeSingle() : { data: null };
   const h = hoursUntil(a.starts_at);
@@ -44,7 +47,7 @@ export default async function Reserva({ params }: { params: { token: string } })
           <div><span className="label">Sessão</span></div>
           <div><span>Serviço</span><span>{String(a.terms_snapshot?.quote_label ?? a.service)}</span></div>
           <div><span>Duração estimada</span><span>{formatDuration(a.duration_minutes)}</span></div>
-          {s.address ? <div><span>Local</span><span>{s.address}{s.city ? `, ${s.city}` : ''}</span></div> : null}
+          {place ? <div><span>Local</span><span>{place}</span></div> : null}
         </div>
         <div className="summary">
           <div><span className="label">Valores</span></div>

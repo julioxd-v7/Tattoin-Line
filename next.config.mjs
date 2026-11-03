@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
-const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname : 'localhost';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL) : null;
+const supabaseHost = supabaseUrl ? supabaseUrl.hostname : 'localhost';
+// produção usa https; o Supabase local (CLI) roda em http
+const supabaseProtocol = supabaseUrl?.protocol === 'http:' ? 'http' : 'https';
 
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: supabaseHost, pathname: '/storage/v1/object/public/**' }]
+    remotePatterns: [{ protocol: supabaseProtocol, hostname: supabaseHost, pathname: '/storage/v1/object/public/**' }]
   },
   // o Konva tem uma versão para Node que usa o pacote 'canvas'; o simulador só roda no navegador
   webpack: (config, { isServer }) => {

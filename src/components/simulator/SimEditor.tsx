@@ -25,6 +25,12 @@ export default function SimEditor({ photo, art, value, hideArt, onCommit }: Prop
   const trRef = useRef<Konva.Transformer>(null);
   const [box, setBox] = useState({ w: 0, h: 0 });
   const [selected, setSelected] = useState(true);
+  // cor das alças = cor de destaque do site (token --color-accent; muda com a escolha do painel)
+  const [handle, setHandle] = useState('#c5ff4a');
+  useEffect(() => {
+    const c = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
+    if (/^#[0-9a-f]{3,8}$/i.test(c)) setHandle(c);
+  }, []);
   const pinch = useRef<{ dist: number; angle: number; width: number; rotation: number } | null>(null);
 
   useEffect(() => {
@@ -126,9 +132,9 @@ export default function SimEditor({ photo, art, value, hideArt, onCommit }: Prop
               enabledAnchors={['top-left', 'top-right', 'bottom-left', 'bottom-right']}
               anchorSize={16}
               anchorCornerRadius={8}
-              anchorStroke="#a3342a"
-              anchorFill="#fff8f2"
-              borderStroke="#a3342a"
+              anchorStroke={handle}
+              anchorFill="#0b0b0b"
+              borderStroke={handle}
               borderDash={[6, 4]}
               rotateAnchorOffset={28}
               rotationSnaps={[0, 45, 90, 135, 180, 225, 270, 315]}

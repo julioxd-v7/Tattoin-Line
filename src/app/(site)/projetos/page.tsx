@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { FlashCard } from '@/components/Cards';
-import { BigSkull } from '@/components/Icons';
+import { ProjectCard } from '@/components/ProjectCard';
 import { getFlashProjects, getSettings, publicImageUrl } from '@/lib/data';
 
 export const revalidate = 120;
@@ -18,10 +17,9 @@ export default async function Projetos() {
         </div>
       </div>
       <section className="paper section" style={{ paddingTop: 64 }} aria-labelledby="cat">
-        <BigSkull stroke="currentColor" className="bg-skull" style={{ position: 'absolute', left: -140, bottom: -80, width: 480, opacity: 0.06 }} />
         <div className="wrap" style={{ position: 'relative' }}>
           <div className="section-head"><h2 className="h3" id="cat">Catálogo</h2><span className="small">{count('disponivel')} disponíveis · {count('reservado')} reservados · {count('vendido')} já tatuados</span></div>
-          {list.length ? <div className="grid">{list.map((f, i) => <FlashCard key={f.id} project={f} index={i} imageUrl={publicImageUrl(f.image_path)} />)}</div> : <p className="lead">Nenhum projeto publicado no momento.</p>}
+          {list.length ? <div className="project-grid">{list.map((f, i) => <ProjectCard key={f.id} project={f} index={i} imageUrl={publicImageUrl(f.image_path)} />)}</div> : <p className="lead">Nenhum projeto publicado no momento.</p>}
         </div>
       </section>
       <section className="section" aria-labelledby="como">

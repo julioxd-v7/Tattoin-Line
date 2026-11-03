@@ -43,7 +43,7 @@ export default async function EditWork({ params, searchParams }: { params: { id:
         <label className="check"><input type="checkbox" name="client_consent" defaultChecked={w?.client_consent} /> <span>O cliente autorizou a publicação destas imagens (obrigatório para publicar). Não publique rosto ou dados que identifiquem a pessoa sem autorização.</span></label>
         <div className="form-grid">
           <ImageInput name="images" multiple label={<>Adicionar fotos <small>— JPG, PNG, WebP ou AVIF. Fotos grandes são reduzidas automaticamente</small></>} />
-          <label className="field"><span>Texto alternativo das novas fotos</span><input className="input" name="alt" placeholder="ex.: caveira com rosa em blackwork no antebraço" /></label>
+          <label className="field"><span>Texto alternativo das novas fotos</span><input className="input" name="alt" placeholder="ex.: ramo de oliveira em fine line no antebraço" /></label>
         </div>
         <Submit>Salvar</Submit>
       </ActionForm>

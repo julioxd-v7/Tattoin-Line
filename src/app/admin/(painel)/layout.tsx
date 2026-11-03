@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { requireAdmin } from '@/lib/admin';
 import { AdminNav } from '@/components/AdminNav';
-import { SkullIcon } from '@/components/Icons';
+import { BrandMark } from '@/components/Icons';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { env } from '@/lib/env';
 import { logout } from '../actions';
@@ -15,11 +15,11 @@ export default async function PainelLayout({ children }: { children: React.React
   return (
     <div className="admin-shell">
       <nav className="admin-nav" aria-label="Painel">
-        <Link href="/admin" style={{ background: 'none', padding: 0, marginBottom: 16, gap: 8, color: 'var(--fg)' }}><SkullIcon /> <span style={{ fontFamily: 'var(--font-display)', fontSize: 24 }}>Tattoin Line</span></Link>
+        <Link href="/admin" className="admin-brand" aria-label="Painel — visão geral"><BrandMark /> <span>Tattoin Line</span></Link>
         <AdminNav />
-        <div style={{ marginTop: 'auto', paddingTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div className="admin-nav-foot">
           <ThemeToggle />
-          <span className="small">{ctx.email}</span>
+          <span className="small admin-email">{ctx.email}</span>
           <Link href="/" target="_blank">Ver site</Link>
           <form action={logout}><button type="submit" className="btn btn-ghost btn-sm">Sair</button></form>
         </div>
