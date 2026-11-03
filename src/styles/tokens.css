@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Tattoin Line — tokens de design
+   Fonte única de cores, tipografia, espaçamento, forma e movimento.
+   Para personalizar o estúdio, troque os valores aqui (ou a cor de destaque
+   em Painel → Configurações). Documentação: DESIGN.md
+   ========================================================================== */
+
+:root {
+  /* ---------- Cor · tema escuro (padrão) ---------- */
+  --color-bg: #0b0b0b;            /* fundo principal */
+  --color-bg-alt: #111111;        /* fundo secundário: faixas alternadas, rodapé */
+  --color-surface: #181818;       /* superfícies: painéis, campos, menus, molduras vazias */
+  --color-border: #303030;        /* divisórias e bordas */
+  --color-border-strong: #4a4a4a; /* divisória de destaque, botão secundário */
+  --color-border-input: #6b6b6b;  /* borda de campo de formulário (contraste ≥ 3:1) */
+  --color-text: #f0f0f0;          /* texto principal */
+  --color-text-muted: #999999;    /* texto secundário */
+  --color-accent: #c5ff4a;        /* destaque — usar com moderação */
+  --color-accent-text: var(--color-accent); /* destaque aplicado em texto, borda ou foco */
+  --color-on-accent: #0b0b0b;     /* texto sobre o destaque */
+  --color-on-text: #0b0b0b;       /* texto sobre fundo claro (botão primário) */
+  --color-ok: #8fcf9b;
+  --color-warn: #e8b86a;
+  --color-danger: #ff7a6b;
+  --color-overlay: rgba(0, 0, 0, 0.78);
+
+  /* ---------- Tipografia ---------- */
+  /* --font-display e --font-body são criadas pelo next/font em src/app/layout.tsx */
+  --font-heading: var(--font-display), "Space Grotesk", system-ui, sans-serif;
+  --font-text: var(--font-body), "Inter", system-ui, sans-serif;
+
+  --fs-display: clamp(44px, 6.4vw, 96px);
+  --fs-h1: clamp(40px, 5.2vw, 76px);
+  --fs-h2: clamp(32px, 3.6vw, 52px);
+  --fs-h3: clamp(20px, 1.7vw, 24px);
+  --fs-lead: clamp(17px, 1.3vw, 19px);
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-label: 12px;
+
+  --lh-tight: 1;
+  --lh-heading: 1.08;
+  --lh-body: 1.65;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+
+  --tracking-heading: -0.01em;
+  --tracking-label: 0.18em;
+
+  /* ---------- Espaçamento (base 4) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+  --space-11: 96px;
+  --space-12: 128px;
+
+  --section-y: clamp(72px, 9vw, 128px);  /* respiro vertical de seção */
+  --gutter: clamp(16px, 4vw, 40px);      /* margem lateral do container */
+  --container: 1320px;
+  --container-narrow: 760px;
+  --container-wide: 1600px;
+  --header-h: 72px;
+
+  /* ---------- Forma ---------- */
+  --radius: 0px;           /* cantos retos em todo o site */
+  --border-width: 1px;
+  --control-h: 48px;       /* altura de botão e campo */
+  --control-h-sm: 40px;
+
+  /* ---------- Movimento ---------- */
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+
+  /* ---------- Camadas ---------- */
+  --z-header: 40;
+  --z-menu: 45;
+  --z-float: 60;
+  --z-modal: 80;
+
+  color-scheme: dark;
+}
+
+/* ---------- Tema claro (sistema ou botão de tema) ---------- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-bg: #f4f4f2;
+    --color-bg-alt: #ecece9;
+    --color-surface: #ffffff;
+    --color-border: #d6d6d2;
+    --color-border-strong: #a8a8a3;
+    --color-border-input: #8a8a86;
+    --color-text: #101010;
+    --color-text-muted: #5c5c5a;
+    --color-accent-text: color-mix(in srgb, var(--color-accent) 42%, #000);
+    --color-on-text: #f4f4f2;
+    --color-ok: #2e6b3e;
+    --color-warn: #7a4f10;
+    --color-danger: #b23a2b;
+    --color-overlay: rgba(16, 16, 16, 0.6);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --color-bg: #f4f4f2;
+  --color-bg-alt: #ecece9;
+  --color-surface: #ffffff;
+  --color-border: #d6d6d2;
+  --color-border-strong: #a8a8a3;
+  --color-border-input: #8a8a86;
+  --color-text: #101010;
+  --color-text-muted: #5c5c5a;
+  --color-accent-text: color-mix(in srgb, var(--color-accent) 42%, #000);
+  --color-on-text: #f4f4f2;
+  --color-ok: #2e6b3e;
+  --color-warn: #7a4f10;
+  --color-danger: #b23a2b;
+  --color-overlay: rgba(16, 16, 16, 0.6);
+  color-scheme: light;
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Escopo sempre escuro ----------
+   Para blocos sobre fotografia (ex.: topo com foto de fundo): mantém o texto
+   claro mesmo no tema claro. Os nomes antigos (--fg, --line…) são recalculados. */
+.theme-dark {
+  --color-bg: #0b0b0b;
+  --color-bg-alt: #111111;
+  --color-surface: #181818;
+  --color-border: #303030;
+  --color-border-strong: #4a4a4a;
+  --color-border-input: #6b6b6b;
+  --color-text: #f0f0f0;
+  --color-text-muted: #b3b3b3;
+  --color-accent-text: var(--color-accent);
+  --color-on-text: #0b0b0b;
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --line: var(--color-border);
+  --line-strong: var(--color-border-strong);
+  --fg: var(--color-text);
+  --muted: var(--color-text-muted);
+  --dim: var(--color-text-muted);
+  --accent-ink: var(--color-accent-text);
+  color-scheme: dark;
+  color: var(--color-text);
+}
+
+/* ---------- Nomes antigos ----------
+   As páginas ainda não redesenhadas (etapas 04–10) usam estes nomes.
+   Eles apontam para os tokens novos; remover quando ninguém mais usar. */
+:root, :root[data-theme] {
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --line: var(--color-border);
+  --line-strong: var(--color-border-strong);
+  --fg: var(--color-text);
+  --muted: var(--color-text-muted);
+  --dim: var(--color-text-muted);
+  --accent: var(--color-accent);
+  --accent-ink: var(--color-accent-text);
+  --on-accent: var(--color-on-accent);
+  --danger: var(--color-danger);
+  --paper: var(--color-bg-alt);
+  --ink: var(--color-text);
+  --art: var(--color-text-muted);
+  --ease-out: var(--ease);
+  /* status usados em estilos inline do agendamento, cadastro e painel */
+  --t-ok: var(--color-ok);
+  --t-warn: var(--color-warn);
+  --t-info: var(--color-text);
+  --a-bad-line: var(--color-danger);
+  --a-warn-line: var(--color-warn);
+  --a-ok-line: var(--color-ok);
+}

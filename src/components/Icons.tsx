@@ -1,14 +1,28 @@
 import type { SVGProps } from 'react';
-import { ART, SKULL_BIG } from '@/lib/art';
+import { ART } from '@/lib/art';
 
-export function SkullIcon({ size = 26, ...p }: { size?: number } & SVGProps<SVGSVGElement>) {
+/**
+ * Marca do estúdio: estrela de quatro pontas em traço fino, usada ao lado do nome.
+ * Troque este desenho pelo logotipo do tatuador quando houver um.
+ */
+export function BrandMark({ size = 28, ...p }: { size?: number } & SVGProps<SVGSVGElement>) {
   return (
-    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M12 3C7.6 3 5 6 5 10c0 2.4 1.2 4 2.5 4.8V17a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-2.2C17.8 14 19 12.4 19 10c0-4-2.6-7-7-7Z" />
-      <circle cx="9.3" cy="10.5" r="1.6" />
-      <circle cx="14.7" cy="10.5" r="1.6" />
-      <path d="M12 12.6l-.9 1.8h1.8Z M10 18v-2 M12 18v-2 M14 18v-2" />
+    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth={1} strokeLinejoin="round" className="brand-mark" {...p}>
+      <path d="M16 1.5 L18.2 13.8 L30.5 16 L18.2 18.2 L16 30.5 L13.8 18.2 L1.5 16 L13.8 13.8 Z" />
+      <path d="M16 7 L16 25 M7 16 L25 16" strokeWidth={0.6} />
     </svg>
+  );
+}
+
+export function WhatsAppIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3a2.6 2.6 0 0 0-.8 1.9 4.5 4.5 0 0 0 .9 2.4 10.3 10.3 0 0 0 4 3.5c1.5.6 2 .7 2.7.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+  );
+}
+
+export function TikTokIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.4 2.6 2.2 4.5 5 4.8" /></svg>
   );
 }
 
@@ -20,24 +34,5 @@ export function LineArt({ path, stroke = 'currentColor', width = 1.3, className,
   );
 }
 
-export function BigSkull({ stroke, width = 2, className, style }: { stroke: string; width?: number; className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 200 220" fill="none" stroke={stroke} strokeWidth={width} className={className} style={style}>
-      {SKULL_BIG.map((d) => <path key={d} d={d} />)}
-    </svg>
-  );
-}
-
-export function HeroSkull() {
-  return (
-    <svg className="float" role="img" aria-label="Ilustração: caveira com rosas" viewBox="0 0 200 220" width="92%" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
-      {SKULL_BIG.map((d) => <path key={d} d={d} />)}
-      <path d="M100 20 L104 34 L98 44 L103 56" strokeWidth={1.1} />
-      <path d="M56 142 C64 146 70 150 72 156 M144 142 C136 146 130 150 128 156" />
-      <path d="M150 196 C138 188 140 170 154 168 C168 166 176 180 168 192 C163 200 152 202 150 196 Z M155 175 C150 181 156 189 164 184 M152 186 C158 192 166 190 168 184" stroke="#e0644f" />
-      <path d="M160 200 C166 210 178 214 190 210 M172 210 C176 202 184 200 190 202 M30 200 C44 196 54 200 62 208 M44 198 C42 190 36 186 28 188" stroke="#e0644f" strokeWidth={1.3} />
-    </svg>
-  );
-}
 
 export { ART };

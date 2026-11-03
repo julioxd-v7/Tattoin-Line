@@ -3,13 +3,12 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 /**
- * Revelação ao rolar (IntersectionObserver) e parallax leve das caveiras.
+ * Revelação ao rolar (IntersectionObserver): entrada progressiva e discreta dos elementos com data-rv.
  * Só esconde o que está abaixo da tela no carregamento: a primeira tela aparece completa.
  */
 export function Motion() {
   const path = usePathname();
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let io: IntersectionObserver | null = null;
     const watch = () => {
       if (!io) return;
@@ -35,19 +34,12 @@ export function Motion() {
     const mo = new MutationObserver(() => watch());
     mo.observe(document.body, { childList: true, subtree: true });
 
-    let ticking = false;
-    const items = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
-    const update = () => {
-      const vh = window.innerHeight;
-      items.forEach((el) => {
-        const r = el.getBoundingClientRect();
-        el.style.transform = `translate3d(0,${((r.top + r.height / 2 - vh / 2) * Number(el.dataset.parallax)).toFixed(1)}px,0)`;
-      });
-      ticking = false;
+    return () => {
+      io?.disconnect(); mo.disconnect();
+      // o que ainda esperava a entrada volta ao estado inicial; senão, ao montar de novo
+      // (modo estrito do React, troca de página), ninguém mais observa e fica invisível
+      document.querySelectorAll<HTMLElement>('.rv-wait').forEach((el) => el.classList.remove('rv-wait', 'rv-seen'));
     };
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    if (!reduce && items.length) { window.addEventListener('scroll', onScroll, { passive: true }); update(); }
-    return () => { io?.disconnect(); mo.disconnect(); window.removeEventListener('scroll', onScroll); };
   }, [path]);
   return null;
 }

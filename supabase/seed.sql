@@ -12,8 +12,8 @@ insert into public.site_settings (
   size_tiers, quote_rules_text, cancellation_policy, privacy_policy, hourly_rate_cents
 )
 select a.id,
-  'Arte que fica pra vida toda.',
-  'Tatuagem autoral. Cada desenho é criado junto com você.',
+  E'Arte na pele.\nCom propósito.',
+  'Tatuagens autorais, feitas com técnica, respeito e atenção aos detalhes.',
   '[Apresentação do artista: trajetória, há quanto tempo tatua, onde atende e o que o move.]',
   '{}',
   'contato@exemplo.com.br', '5581900000000', 'tattoinline', '[Endereço do estúdio]', 'Recife — PE', 'CNPJ [00.000.000/0000-00]',

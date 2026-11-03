@@ -19,7 +19,18 @@ export interface Settings {
   hero_image_path: string | null; hero_image_alt: string | null; hero_caption: string | null;
   about_image_path: string | null; about_image_alt: string | null; home_works: string[]; home_flash: string[];
   brand_name: string; seo_description: string | null; home_instagram: string[]; whatsapp_message: string | null;
+  // primeira dobra (migration 0007) — opcionais: o site funciona antes da migration rodar
+  hero_eyebrow?: string | null; hero_layout?: HeroLayout; hero_overlay?: number;
+  hero_focus_x?: number; hero_focus_y?: number; hero_zoom?: number;
+  // sobre o artista e faixa do simulador (migration 0008) — também opcionais
+  about_headline?: string | null; sim_image_path?: string | null; sim_image_alt?: string | null;
+  // depoimentos (migration 0009)
+  testimonials_show_empty?: boolean;
+  // outras redes sociais (migration 0010): link completo ou @perfil
+  social_tiktok?: string | null; social_youtube?: string | null; social_facebook?: string | null;
 }
+
+export type HeroLayout = 'lateral' | 'fundo';
 
 export interface Testimonial {
   id: string; author_name: string; body: string; rating: number | null; work_id: string | null; source: string | null;

@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Base: reset, tipografia, links, containers, divisórias e utilitários.
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+/* faixa do recorte do iPhone sempre na cor do fundo */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--color-bg); }
+img, svg, video, canvas { max-width: 100%; }
+main { overflow-x: clip; }
+::selection { background: var(--color-accent); color: var(--color-on-accent); }
+
+/* ---------- Foco: visível só no teclado ---------- */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent-text); outline-offset: 3px; border-radius: var(--radius); }
+
+/* ---------- Títulos ---------- */
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { text-wrap: pretty; }
+
+.display,
+.h1,
+.h2,
+.page-head h1 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-light);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+  margin: 0;
+}
+.display { font-size: var(--fs-display); line-height: 0.98; }
+.h1, .page-head h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); }
+.h2 { font-size: var(--fs-h2); line-height: 1.04; }
+.h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+/* ênfase dentro de título: mesma cor, sem itálico (o destaque é o tamanho) */
+.display em, .h1 em, .h2 em { font-style: normal; color: inherit; }
+
+/* ---------- Texto ---------- */
+.lead { margin: 0; font-size: var(--fs-lead); line-height: 1.6; color: var(--color-text-muted); max-width: 52ch; }
+.muted { color: var(--color-text-muted); }
+.small { font-size: var(--fs-small); line-height: 1.5; color: var(--color-text-muted); }
+.prose { max-width: 68ch; }
+
+/* Rótulo de seção: "PORTFÓLIO ——" */
+.eyebrow,
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.eyebrow::after { content: ""; width: 32px; height: 1px; background: currentColor; opacity: 0.6; }
+.eyebrow.no-rule::after { display: none; }
+.label { gap: var(--space-2); }
+
+/* Numeração editorial: "01 / 04" */
+.index { font-family: var(--font-heading); font-size: var(--fs-label); letter-spacing: 0.08em; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- Links ---------- */
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color var(--dur-fast) ease, text-decoration-color var(--dur-fast) ease; }
+a:hover { color: var(--color-text); }
+
+/* link de texto com sublinhado que cresce da esquerda */
+.link {
+  color: var(--color-text);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+  padding-bottom: 2px;
+  transition: background-size var(--dur) var(--ease), color var(--dur-fast) ease;
+}
+.link:hover, .link[aria-current="page"] { background-size: 100% 1px; }
+.link-muted { color: var(--color-text-muted); }
+.link-muted:hover { color: var(--color-text); }
+
+/* link de ação com seta: "Ver todos os trabalhos →" */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-accent-text);
+  text-decoration: none;
+}
+.link-arrow svg { transition: transform var(--dur) var(--ease); }
+.link-arrow:hover { color: var(--color-accent-text); }
+.link-arrow:hover svg { transform: translateX(4px); }
+.link-arrow.is-neutral { color: var(--color-text); }
+
+/* ---------- Containers ---------- */
+.container,
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.container-narrow { max-width: calc(var(--container-narrow) + 2 * var(--gutter)); }
+.container-wide { max-width: calc(var(--container-wide) + 2 * var(--gutter)); }
+.container-full { max-width: none; }
+
+/* grade de 12 colunas para composições assimétricas */
+.grid-12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); row-gap: var(--space-8); }
+@media (max-width: 900px) { .grid-12 { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--space-4); } .grid-12 > * { grid-column: 1 / -1; } }
+
+/* ---------- Seções e divisórias ---------- */
+.section { padding-block: var(--section-y); }
+.section-alt { background: var(--color-bg-alt); }
+.section + .section:not(.no-rule) { border-top: 1px solid var(--color-border); }
+
+.divider { display: block; width: 100%; height: 0; margin: 0; border: 0; border-top: 1px solid var(--color-border); }
+.divider-strong { border-top-color: var(--color-border-strong); }
+.divider-v { align-self: stretch; width: 0; min-height: 1em; border-left: 1px solid var(--color-border); }
+/* faixa dividida em colunas por fios verticais */
+.split { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.split > * + * { border-left: 1px solid var(--color-border); }
+@media (max-width: 720px) { .split { grid-auto-flow: row; } .split > * + * { border-left: 0; border-top: 1px solid var(--color-border); } }
+
+/* ---------- Utilitários ---------- */
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.skip-link { position: fixed; left: var(--space-4); top: var(--space-4); z-index: calc(var(--z-modal) + 1); padding: var(--space-3) var(--space-4); background: var(--color-text); color: var(--color-on-text); font-weight: var(--fw-medium); }
+/* escondido de verdade (recortado) até receber o foco pelo teclado — não aparece em impressão nem em captura de página inteira */
+.skip-link:not(:focus-visible) { clip-path: inset(50%); width: 1px; height: 1px; padding: 0; overflow: hidden; white-space: nowrap; }
+.tabular { font-variant-numeric: tabular-nums; }
+/* área de toque mínima de 44px para links soltos */
+.tap { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---------- Revelação ao rolar (componente Motion) ---------- */
+[data-rv].rv-wait { opacity: 0; }
+[data-rv="up"].rv-wait { transform: translateY(20px); }
+[data-rv="left"].rv-wait { transform: translateX(-20px); }
+[data-rv="right"].rv-wait { transform: translateX(20px); }
+[data-rv="zoom"].rv-wait { transform: scale(0.98); }
+[data-rv].rv-go { transition: opacity var(--dur-slow) var(--ease), transform 800ms var(--ease); transition-delay: var(--d, 0ms); }
+/* celular e tablet: entradas só verticais (nada desliza de lado) */
+@media (max-width: 900px) { [data-rv="left"].rv-wait, [data-rv="right"].rv-wait { transform: translateY(20px); } }
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  /* sem atraso: com "both", o atraso deixaria o elemento parado no estado inicial (escondido) */
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; transition-delay: 0ms !important; }
+  [data-rv].rv-wait { transform: none; }
+}

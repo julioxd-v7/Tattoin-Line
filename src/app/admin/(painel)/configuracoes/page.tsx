@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { requireAdmin } from '@/lib/admin';
 import { getArtist, getSettings } from '@/lib/data';
 import { ActionForm, Submit } from '@/components/ActionForm';
@@ -48,9 +49,7 @@ export default async function Configuracoes() {
           <label className="field"><span>Mensagem pronta do botão de WhatsApp <small>— opcional</small></span><input className="input" name="whatsapp_message" defaultValue={s.whatsapp_message ?? ''} maxLength={300} placeholder="Olá! Vi seu site e quero fazer uma tatuagem." /></label>
         </div></section>
         <section className="panel"><h2>Conteúdo</h2><div className="panel-body">
-          <F label="Título principal" name="hero_title" value={s.hero_title} />
-          <label className="field"><span>Frase de apresentação</span><textarea className="textarea" name="hero_subtitle" defaultValue={s.hero_subtitle} /></label>
-          <label className="field"><span>Sobre mim</span><textarea className="textarea" name="about" defaultValue={s.about} /></label>
+          <p className="small" style={{ margin: 0 }}>O título e a frase do topo, a frase de apresentação e o texto “Sobre mim” agora ficam em <Link href="/admin/pagina-inicial">Página inicial</Link>, junto com as fotos.</p>
           <div className="form-grid">
             <F label="Especialidades" name="specialties" value={s.specialties.join(', ')} hint="separadas por vírgula" />
             <label className="field"><span>Cor de destaque</span><input className="input" type="color" name="accent_color" defaultValue={s.accent_color} style={{ padding: 4 }} /></label>
@@ -62,7 +61,10 @@ export default async function Configuracoes() {
           <F label="Instagram" name="instagram" value={s.instagram} />
           <F label="Endereço" name="address" value={s.address} />
           <F label="Cidade" name="city" value={s.city} />
-          <F label="Dados comerciais" name="business_info" value={s.business_info} hint="ex.: CNPJ" />
+          <F label="Dados comerciais" name="business_info" value={s.business_info} hint="ex.: razão social e CNPJ — aparecem no rodapé e nas políticas" />
+          <F label="TikTok" name="social_tiktok" value={s.social_tiktok ?? ''} hint="@perfil ou link — opcional" />
+          <F label="YouTube" name="social_youtube" value={s.social_youtube ?? ''} hint="@canal ou link — opcional" />
+          <F label="Facebook" name="social_facebook" value={s.social_facebook ?? ''} hint="nome da página ou link — opcional" />
         </div></div></section>
         <section className="panel"><h2>Políticas</h2><div className="panel-body">
           <label className="field"><span>Cancelamento e reagendamento</span><textarea className="textarea" name="cancellation_policy" defaultValue={s.cancellation_policy} /></label>

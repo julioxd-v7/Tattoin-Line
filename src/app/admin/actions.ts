@@ -8,6 +8,7 @@ import { sessionClient } from '@/lib/supabase/server';
 import { serviceClient } from '@/lib/supabase/admin';
 import { requireAdmin } from '@/lib/admin';
 import { audit, appointmentEvent } from '@/lib/audit';
+import { socialUrl } from '@/lib/contact';
 import { getArtist } from '@/lib/data';
 import { cancelAppointment, refreshFromProvider, BookingError } from '@/lib/booking';
 import { createPreference } from '@/lib/mercadopago';
@@ -54,7 +55,6 @@ export async function saveSettings(_: ActionState, f: FormData): Promise<ActionS
     });
   } catch { return { error: 'Faixas de tamanho: use uma por linha no formato  Rótulo | valor | minutos  (ou "-" para orçamento).' }; }
   const schema = z.object({
-    hero_title: z.string().min(3).max(120), hero_subtitle: z.string().max(400), about: z.string().max(3000),
     accent_color: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Cor inválida'),
     contact_email: z.string().email().or(z.literal('')), whatsapp: z.string().max(20), instagram: z.string().max(60),
     address: z.string().max(200), city: z.string().max(80), business_info: z.string().max(200),
@@ -67,11 +67,11 @@ export async function saveSettings(_: ActionState, f: FormData): Promise<ActionS
     brand_name: z.string().min(2, 'Nome do site').max(60), artist_name: z.string().min(2, 'Nome do artista').max(80),
     seo_description: z.string().max(300), whatsapp_message: z.string().max(300)
   });
-  const p = schema.safeParse(Object.fromEntries(['hero_title', 'hero_subtitle', 'about', 'accent_color', 'contact_email', 'whatsapp', 'instagram', 'address', 'city', 'business_info', 'deposit_percent', 'deposit_min', 'hold_minutes', 'buffer_minutes', 'min_session', 'hourly_rate', 'consult_price', 'consult_minutes', 'payment_methods_text', 'quote_rules_text', 'cancellation_policy', 'privacy_policy', 'reschedule_min_hours', 'booking_window_days', 'specialties', 'brand_name', 'artist_name', 'seo_description', 'whatsapp_message'].map((k) => [k, str(f, k)])));
+  const p = schema.safeParse(Object.fromEntries(['accent_color', 'contact_email', 'whatsapp', 'instagram', 'address', 'city', 'business_info', 'deposit_percent', 'deposit_min', 'hold_minutes', 'buffer_minutes', 'min_session', 'hourly_rate', 'consult_price', 'consult_minutes', 'payment_methods_text', 'quote_rules_text', 'cancellation_policy', 'privacy_policy', 'reschedule_min_hours', 'booking_window_days', 'specialties', 'brand_name', 'artist_name', 'seo_description', 'whatsapp_message'].map((k) => [k, str(f, k)])));
   if (!p.success) return { error: 'Verifique os campos: ' + p.error.issues.map((i) => i.path.join('.')).join(', ') };
   const d = p.data;
   const row = {
-    hero_title: d.hero_title, hero_subtitle: d.hero_subtitle, about: d.about, accent_color: d.accent_color,
+    accent_color: d.accent_color,
     contact_email: d.contact_email || null, whatsapp: d.whatsapp.replace(/\D/g, '') || null, instagram: d.instagram.replace('@', '') || null,
     address: d.address || null, city: d.city || null, business_info: d.business_info || null,
     deposit_percent: d.deposit_percent, deposit_min_cents: reais(d.deposit_min || '0'), allow_full_payment: f.get('allow_full_payment') === 'on',
@@ -88,7 +88,13 @@ export async function saveSettings(_: ActionState, f: FormData): Promise<ActionS
   const { error: e2 } = await serviceClient().from('artists').update({ name: d.artist_name }).eq('id', ctx.artistId);
   if (e2) return { error: 'Não foi possível salvar o nome do artista: ' + e2.message };
   await audit(ctx.artistId, ctx.userId, 'atualizar', 'site_settings', ctx.artistId, { campos: Object.keys(row) });
+  // outras redes (migration 0010) à parte: sem a migration, o resto continua salvo
+  const social = Object.fromEntries((['social_tiktok', 'social_youtube', 'social_facebook'] as const).map((k) => [k, str(f, k).slice(0, 200) || null]));
+  const bad = (['tiktok', 'youtube', 'facebook'] as const).filter((n) => social[`social_${n}`] && !socialUrl(n, social[`social_${n}`]));
   refreshSite();
+  if (bad.length) return { error: `Configurações salvas, mas confira ${bad.map((n) => ({ tiktok: 'TikTok', youtube: 'YouTube', facebook: 'Facebook' })[n]).join(', ')}: use @perfil ou o link da própria rede.` };
+  const { error: e3 } = await serviceClient().from('site_settings').update(social).eq('artist_id', ctx.artistId);
+  if (e3) return { error: /column|coluna/i.test(e3.message) || e3.code === '42703' || e3.code === 'PGRST204' ? 'Configurações salvas. Para salvar TikTok, YouTube e Facebook, rode no banco o arquivo supabase/migrations/0010_redes_sociais.sql.' : 'Configurações salvas, mas as redes não: ' + e3.message };
   return { ok: 'Configurações salvas. Agendamentos já feitos mantêm os valores da época.' };
 }
 

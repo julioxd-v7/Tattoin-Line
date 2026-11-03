@@ -1,22 +1,31 @@
 import type { Config } from 'tailwindcss';
 
+/** Cores, fontes e medidas apontam para os tokens de src/styles/tokens.css. */
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        ink: { DEFAULT: '#121110', surface: '#1c1a18', line: '#2a2724', strong: '#45413b' },
-        bone: { DEFAULT: '#ede8e0', muted: '#bdb5a8', dim: '#a8a094' },
-        blood: { DEFAULT: 'var(--accent)', ink: '#e0644f' },
-        paper: { DEFAULT: '#ede8e0', card: '#fbf9f5', line: '#ddd5c8' }
+        bg: { DEFAULT: 'var(--color-bg)', alt: 'var(--color-bg-alt)' },
+        surface: 'var(--color-surface)',
+        line: { DEFAULT: 'var(--color-border)', strong: 'var(--color-border-strong)', input: 'var(--color-border-input)' },
+        fg: { DEFAULT: 'var(--color-text)', muted: 'var(--color-text-muted)' },
+        accent: { DEFAULT: 'var(--color-accent)', text: 'var(--color-accent-text)', on: 'var(--color-on-accent)' },
+        ok: 'var(--color-ok)',
+        warn: 'var(--color-warn)',
+        danger: 'var(--color-danger)'
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        sans: ['var(--font-body)', 'system-ui', 'sans-serif']
+        display: ['var(--font-heading)'],
+        sans: ['var(--font-text)']
       },
-      maxWidth: { site: '1200px' }
+      borderRadius: { DEFAULT: 'var(--radius)' },
+      maxWidth: { site: 'var(--container)', narrow: 'var(--container-narrow)' },
+      transitionTimingFunction: { brand: 'var(--ease)' }
     }
   },
+  // o container do site é a classe .container de src/styles/base.css
+  corePlugins: { container: false },
   plugins: []
 };
 
